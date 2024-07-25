@@ -29,6 +29,8 @@ const Login = () => {
   };
 
   const handleAuthError = async (error) => {
+    console.error('Authentication Error:', error);  // Log the error
+
     if (error.code === 'auth/account-exists-with-different-credential') {
       const pendingCred = error.credential;
       const email = error.customData.email;
@@ -47,7 +49,7 @@ const Login = () => {
         });
       }
     } else {
-      console.error(error);
+      console.error('Unhandled error:', error);
     }
   };
 

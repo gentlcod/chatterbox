@@ -9,22 +9,41 @@ export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState(null); // Ensure initial state is null
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(user => {
-      setUser(user);
+    const unsubscribe = auth.onAuthStateChanged(currentUser => {
+      setUser(currentUser);
       setLoading(false);
-      if (user) {
-        navigate('/chats'); // Navigate to chats if user is authenticated
+
+      if (currentUser) {
+        navigate('/chats');
       }
     });
 
-    return unsubscribe;
+    return () => unsubscribe();
   }, [navigate]);
 
-  const value = { user };
+  const value = {
+    user,
+    login: async (provider) => {
+      try {
+        const result = await auth.signInWithPopup(provider);
+        console.log('User logged in:', result.user);
+      } catch (error) {
+        console.error('Login error:', error);
+      }
+    },
+    logout: async () => {
+      try {
+        await auth.signOut();
+        navigate('/');
+      } catch (error) {
+        console.error('Logout error:', error);
+      }
+    }
+  };
 
   return (
     <AuthContext.Provider value={value}>

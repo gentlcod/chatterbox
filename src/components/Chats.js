@@ -3,27 +3,12 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChatEngine } from 'react-chat-engine';
 import axios from 'axios';
-import { auth } from '../firebase';
 import { useAuth } from '../contexts/AuthContext';
 
 const Chats = () => {
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
-  const { user } = useAuth();
   const [loading, setLoading] = useState(true);
-
-  console.log(user);
-
-  const handleLogout = async () => {
-    await auth.signOut();
-    navigate('/');
-  };
-
-  const getFile = async (url) => {
-    const response = await fetch(url);
-    const data = await response.blob();
-
-    return new File([data], 'userPhoto.jpg', { type: 'image/jpeg' });
-  };
 
   useEffect(() => {
     if (!user) {
@@ -67,7 +52,7 @@ const Chats = () => {
     <div className='chats-page'>
       <div className='nav-bar'>
         <div className='logo-tab'>ChatterBox</div>
-        <div onClick={handleLogout} className='logout-tab'>
+        <div onClick={logout} className='logout-tab'>
           Logout
         </div>
       </div>

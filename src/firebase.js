@@ -16,7 +16,6 @@ export const auth = getAuth(app);
 
 export const googleProvider = new GoogleAuthProvider();
 export const facebookProvider = new FacebookAuthProvider();
-// Request the email permission explicitly
 facebookProvider.addScope('email');
 
 export default app;
