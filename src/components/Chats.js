@@ -68,3 +68,10 @@ const Chats = () => {
 };
 
 export default Chats;
+
+const getFile = async (url) => {
+  const response = await fetch(url);
+  const data = await response.blob();
+  const filename = url.split('/').pop();
+  return new File([data], filename, { type: data.type });
+};

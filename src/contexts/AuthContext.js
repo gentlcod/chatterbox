@@ -1,4 +1,3 @@
-// AuthContext.js
 import React, { useContext, useState, useEffect } from 'react';
 import { auth } from '../firebase';
 import { useNavigate } from 'react-router-dom';
@@ -13,7 +12,7 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(currentUser => {
+    const unsubscribe = auth.onAuthStateChanged((currentUser) => {
       setUser(currentUser);
       setLoading(false);
 
@@ -42,7 +41,7 @@ export const AuthProvider = ({ children }) => {
       } catch (error) {
         console.error('Logout error:', error);
       }
-    }
+    },
   };
 
   return (

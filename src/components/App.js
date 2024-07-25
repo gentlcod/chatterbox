@@ -6,18 +6,18 @@ import Login from './Login';
 import Chats from './Chats';
 
 function App() {
-    return (
-        <div style={{fontFamily: 'Avenir'}}>
-            <Router>
-                <AuthProvider>
-                    <Routes>
-                        <Route path='/' Component={Login} />
-                        <Route path='/chats' Component={Chats} />
-                    </Routes>
-                </AuthProvider>
-            </Router>
-        </div>
-    );
+  return (
+    <div style={{ fontFamily: 'Avenir' }}>
+      <Router>
+        <AuthProvider>
+          <Routes>
+            <Route path='/' element={<Login />} />
+            <Route path='/chats' element={<Chats />} />
+          </Routes>
+        </AuthProvider>
+      </Router>
+    </div>
+  );
 }
 
 export default App;
